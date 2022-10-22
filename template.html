@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Auto Reload</title>
+    <style>
+        * {
+            font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+        }
+        span {
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <h1>Krisna Madani</h1>
+    <h2>Assignment 3</h2>
+    <h3>Golang Auto Reload Data Project</h3>
+
+    <p>Water : <span id="water">0</span> m</p>
+    <p>Status Water : <span id="status-water">&nbsp;</span></p>
+    <p>Wind : <span id="wind">0</span> m/s</p>
+    <p>Status Wind : <span id="status-wind">&nbsp;</span></p>
+
+    <script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
+    <script>
+        getData()
+
+        setInterval(getData, 5000);
+
+        function getData() {
+            $.ajax({
+                type: "GET",
+                dataType: 'json',
+                url: 'http://localhost:8080/status',
+                success: function(response){
+                    $('#water').text(response.status.water);
+                    $('#wind').text(response.status.wind);
+
+                    $('#status-water').text(response.status_water);
+                    $('#status-wind').text(response.status_wind);
+
+                    console.log("refreshed " + Math.random())
+                }
+            });
+        }
+
+    </script>
+</body>
+</html>
